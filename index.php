@@ -23,7 +23,7 @@ require 'Router/Router.php';
 
 $router->run();
 
-dd($request->get());
+// dd($router->getMatchRouter());
 function dd($parm){
     echo '<pre>';
     var_dump($parm);

@@ -24,12 +24,15 @@ class Router {
     private $response;
 
 
+    private $request;
+
     public function __construct($url, $method)
     {
         $this->url = rtrim($url, '/');
         $this->method = $method;
 
         $this->response = $GLOBALS['response'];
+        $this->request = $GLOBALS['request'];
     }
 
 
@@ -136,12 +139,19 @@ class Router {
             $this->setNotFound();
         }
         else {
-            if(is_callable($this->matchRouter[0]->getCallback())){
-                call_user_func($this->matchRouter[0]->getCallback(), $this->param);
+            foreach($this->matchRouter as $router){
+               if($router->getMethod() === $this->request->getMethod() ){
+
+                    if(is_callable($router->getCallback())){
+                    call_user_func($router->getCallback(), $this->param);
+                    }
+                    else {
+                        $this->runController($router->getCallback(), $this->param);
+                    } 
+               }
+                
             }
-            else {
-                $this->runController($this->matchRouter[0]->getCallback(), $this->param);
-            }
+            
         }
     }
 
