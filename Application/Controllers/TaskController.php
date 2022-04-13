@@ -43,8 +43,9 @@ class TaskController extends Controller {
     public function add(){
 
         $model = $this->model('Task');
-        $model->addTask();
+        $data =  $model->addTask();
         $this->response->sendStatus(200);
-        // $this->response->setContent(['message' => 'the tasks has been added']);
+        $this->response->setHeader('Content-Type: application/json; charset=UTF-8');
+        $this->response->setContent(['data' => $data ]);
     }
 }

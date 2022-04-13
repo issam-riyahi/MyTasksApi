@@ -46,30 +46,31 @@ class Task extends Model {
 
     public function addTask(){
 
-        $postParm = $GLOBALS['request']->post();
-        foreach($postParm as $key => $value ){
-            if(in_array($key, ['id', 'taskId', 'task_id']))
-            $task_id = $value ;
-            if(in_array($key, ['sectionId', 'section' , 'section_id']))
-            $section_id = $value ;
-            if(in_array($key, ['date', 'doDate']))
-            $doDate = $value;
-            if(in_array($key, ['userId', 'user', 'user_id']))
-            $user_id = $value;
+        // $postParm = $GLOBALS['request']->post();
+        // foreach($postParm as $key => $value ){
+        //     if(in_array($key, ['id', 'taskId', 'task_id']))
+        //     $task_id = $value ;
+        //     if(in_array($key, ['sectionId', 'section' , 'section_id']))
+        //     $section_id = $value ;
+        //     if(in_array($key, ['date', 'doDate']))
+        //     $doDate = $value;
+        //     if(in_array($key, ['userId', 'user', 'user_id']))
+        //     $user_id = $value;
             
 
-        }
+        // }
         
         
-            $done = $postParm['done'];
-            $title = $postParm['title'];
+        //     $done = $postParm['done'];
+        //     $title = $postParm['title'];
         
-        // // $result = [];
-        // list('task_id' => $task_id ,'title' => $title, 'doDate' => $doDate, 'done' =>  $done, 'section_id' => $section_id, 'user_id' => $user_id) = $postParm;
-        // var_dump($task_id, $section_id);
-        $sql = "INSERT INTO `tasks`(`title`, `doDate`, `done`, `section_id`, `user_id`) VALUES ('"  . $title . '\',\'' . $doDate . '\',\'' . $done . '\',\'' . $section_id . '\',\'' . $user_id . "')" ;
+        // // // $result = [];
+        // // list('task_id' => $task_id ,'title' => $title, 'doDate' => $doDate, 'done' =>  $done, 'section_id' => $section_id, 'user_id' => $user_id) = $postParm;
+        // // var_dump($task_id, $section_id);
+        // $sql = "INSERT INTO `tasks`(`title`, `doDate`, `done`, `section_id`, `user_id`) VALUES ('"  . $title . '\',\'' . $doDate . '\',\'' . $done . '\',\'' . $section_id . '\',\'' . $user_id . "')" ;
 
-        $this->db->query($sql);
+        // $this->db->query($sql);
+        // return $postParm;
     }
 
 }
