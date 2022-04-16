@@ -11,9 +11,12 @@ class User extends Model {
         $getParmas = $GLOBALS['request']->get();
         $sql = 'SELECT * FROM users';
         if(!empty($getParmas)){
+            $sql .= ' WHERE ' ; 
             foreach($getParmas as $key => $value){
-                $sql .= ' WHERE ' . $key . "=" . "'" . $value . "'" ;
+                $sql .=  $key . "=" . "'" . $value . "' and " ;
             }
+            $sql = substr($sql,0 , -4);
+            
             return $this->db->query($sql);
         }
 

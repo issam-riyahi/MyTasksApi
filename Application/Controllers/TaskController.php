@@ -44,8 +44,21 @@ class TaskController extends Controller {
 
         $model = $this->model('Task');
         $data =  $model->addTask();
+        // $this->response->sendStatus(200);
+        // $this->response->setHeader('Content-Type: application/json; charset=UTF-8');
+        // $this->response->setContent(['data' => $data ]);
+    }
+
+    public function create(){
+        $model = $this->model('Task');
+        $model->addTask();
         $this->response->sendStatus(200);
-        $this->response->setHeader('Content-Type: application/json; charset=UTF-8');
-        $this->response->setContent(['data' => $data ]);
+    }
+
+    public function update($task){
+        $model = $this->model('Task');
+        $model->UpdateTask($task['updatedTask']);
+        $this->response->sendStatus(200);
+        $this->response->setContent(['message' => 'ok']);
     }
 }
