@@ -18,7 +18,8 @@ $router->put('/section',  'SectionController@update');
 
 
 $router->get('/user', 'UserController@index');
-$router->get('/user/:userId', 'UserController@byUser');
+// $router->get('/user/:userId', 'UserController@byUser');
+$router->post('/user', 'UserController@create');
 $router->get('/', function() {
     echo 'Welcome ';
 });

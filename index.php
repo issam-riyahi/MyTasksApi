@@ -3,6 +3,7 @@ require 'config.php';
 
 require_once SYSTEM . 'startup.php';
 require_once CONTROLLERS . 'TaskController.php';
+require_once AUTHENTICATION . 'validateJwt.php';
 use Router\Router;
 
 // dd($GLOBALS);
@@ -17,22 +18,26 @@ $response->setHeader("Access-Control-Allow-Headers: X-Requested-With, Content-Ty
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept");
-// $response->setHeader("Content-Type: application/json; charset=UTF-8");
-// $response->setHeader('Vary: http://localhost:3000');
+header("Access-Control-Allow-Headers: X-Requested-With, Authorization,  Content-Type, Accept");
+
+
 $router = new Router($request->getUrl(), $request->getMethod());
 
-// var_dump($router->getRouter());
 require 'Router/Router.php';
-// dd(class_exists('Controllers/TaskController'));
+$jwt = getBearerToken();
+$checkAuth = validateJWT($jwt, SECRET);
 
-$router->run();
-
-// dd($router->getMatchRouter());
-function dd($parm){
-    echo '<pre>';
-    var_dump($parm);
-    echo '</pre>';
+if($checkAuth){
+    $router->run();
+    
 }
+else{
 
+    $response->sendStatus(401);
+    $response->setContent(['message'=> 'Unauthorized']);
+    // $header = $response->getHeader();
+    // var_dump($header);
+    
+
+}
 $response->render();

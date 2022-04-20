@@ -119,7 +119,7 @@ class Response
 
 
     public function isInvalid($code){
-        return $code > 100 || $code <= 600 ;
+        return $code < 100 || $code >= 600 ;
     }
 
 
@@ -138,7 +138,7 @@ class Response
 
     public function sendStatus($code){
         if(!$this->isInvalid($code)){
-            $this->setHeader(sprintf('HTTP/1.1' . $code . '%s' , $this->getStatusText($code)));
+            $this->setHeader(sprintf('HTTP/1.1 ' . $code . ' ' .'%s' , $this->getStatusText($code)));
         }
     }
 
@@ -147,8 +147,10 @@ class Response
         if($this->content){
             $output = $this->content;
 
+
             if(!headers_sent()){
                 foreach($this->headers as $header){
+                    
                     header($header , true);
                 }
             }

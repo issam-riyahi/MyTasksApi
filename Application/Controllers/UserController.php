@@ -14,16 +14,40 @@ class UserController extends Controller {
         $this->response->setContent($data);
     }
 
-    public function ByUser($userId){
+    public function login(){
         $model = $this->model('User');
-        $result = $model->getUser($userId);
+        $result = $model->userLogin();
 
-        $data = ['data' => $result];
-        $this->response->sendStatus(200);
-        $this->response->setContent($data);
+        if(empty($result)){
+            $this->response->sendStatus(404);
+        }
+        else{
+
+            $data = ['data' => $result];
+            $this->response->sendStatus(200);
+            $this->response->setContent($data);
+        }
     }
 
-    public function create($request){
+    public function create(){
+        $model = $this->model('User');
+        $status = $model->userRegister();
+        if($status){
+            $this->response->sendStatus(200);
+            $this->response->setContent(['message' => 'the User has been added']);
+        }
+        else {
+            // $this->response->sendStatus(404);
+            header("HTTP/1.1 209 user Alredy exist");
+            $this->response->setContent(['message' => 'the User already exist']);
+        }
+    }
+
+
+    public function auth(){
+        $model = $this->model('User');
+        return  $model->authenticat();
+
         
     }
 }
