@@ -11,39 +11,29 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
- 
-// database connection will be here
-
 
 
 $validCredentials = true;
 $controller = new UserController();
-$data = $controller->auth();
-if(empty($data)){
-    $validCredentials = false;
+$userId = $controller->request->post()['userId'];
+$data = $controller->getUserById($userId);
+ 
+if(empty($data->row)){
+    $controller->response->sendStatus(400);
+    $controller->response->setContent(['message' => 'invalid entries']);
 }
-
-if($validCredentials){
+else{
     $payload = array(
         "iat" => $issued,
         "exp" => $expire,
         "iss" => $issuer,
-        "data" => $data,
+        "data" => $data->row,
     );
 
 
     $jwt = generateJWT($payload, SECRET);
-    $responseMessage = ["message" => "Login success", "jwt" => $jwt];
+    $responseMessage = ["message" => "refresh Success", "jwt" => $jwt];
     $controller->response->sendStatus(200);
     $controller->response->setContent($responseMessage);
-
-    // echo json_encode(array("message" => "Login success", "jwt" => $jwt));
 }
-else{
-    $controller->response->sendStatus(204);
-    $controller->response->setContent(array("message" => "Login failed."));
-    // http_response_code(401);
-    // echo json_encode(array("message" => "Login failed."));
-}
-
 $controller->response->render();

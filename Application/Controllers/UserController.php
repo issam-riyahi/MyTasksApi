@@ -50,4 +50,11 @@ class UserController extends Controller {
 
         
     }
+
+
+    public function getUserById($userId){
+        $model = $this->model('User');
+
+        return $model->userById($userId);
+    }
 }

@@ -3,13 +3,12 @@ require 'config.php';
 
 require_once SYSTEM . 'startup.php';
 require_once CONTROLLERS . 'TaskController.php';
-require_once AUTHENTICATION . 'validateJwt.php';
+// require_once AUTHENTICATION . 'validateJwt.php';
 use Router\Router;
 
 // dd($GLOBALS);
 
-$request = new Http\Request();
-$response = new Http\Response();
+
 
 
 $response->setHeader("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept"); 
@@ -24,20 +23,20 @@ header("Access-Control-Allow-Headers: X-Requested-With, Authorization,  Content-
 $router = new Router($request->getUrl(), $request->getMethod());
 
 require 'Router/Router.php';
-$jwt = getBearerToken();
-$checkAuth = validateJWT($jwt, SECRET);
+// $jwt = getBearerToken();
+// $checkAuth = validateJWT($jwt, SECRET);
 
-if($checkAuth){
-    $router->run();
+// if($checkAuth){
+//     $router->run();
     
-}
-else{
+// }
+// else{
 
-    $response->sendStatus(401);
-    $response->setContent(['message'=> 'Unauthorized']);
-    // $header = $response->getHeader();
-    // var_dump($header);
+//     $response->sendStatus(401);
+//     $response->setContent(['message'=> 'Unauthorized']);
+//     // $header = $response->getHeader();
+//     // var_dump($header);
     
 
-}
+// }
 $response->render();

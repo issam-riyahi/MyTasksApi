@@ -18,3 +18,6 @@ spl_autoload_register('autoLoad');
 // Helper
 
 require_once 'Helper/helper.php';
+
+$request = new Http\Request();
+$response = new Http\Response();

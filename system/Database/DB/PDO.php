@@ -44,7 +44,7 @@ final class PDO {
                 $result->row = isset($data[0]) ? $data[0] : array();
                 $result->rows = $data;
                 $result->numRows = $this->statment->rowCount();
-                $result->status = "success";
+                // $result->status = "success";
 
                 
 
@@ -56,7 +56,7 @@ final class PDO {
                     $result->row = array();
                     $result->rows = array();
                     $result->numRows = 0;
-                    $result->status = "success";
+                    // $result->status = "faild";
                     return $result;
                 }
             }

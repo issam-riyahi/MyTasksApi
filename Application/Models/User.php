@@ -48,7 +48,7 @@ class User extends Model {
 
 
     public function authenticat(){
-        $postParmas = $GLOBALS['request']->post();
+        $postParmas = $GLOBALS['request']->input();
         $pwd = htmlspecialchars($postParmas['password']) ;
         $username = htmlspecialchars($postParmas['username']) ;
         $sql = 'SELECT `userId`, `username`, `fullName` , `email`, `password` FROM users WHERE `username` =' . "'" . $username  . "'";
@@ -97,5 +97,11 @@ class User extends Model {
             return false;
         }
         
+    }
+
+    public function userById($userId){
+        $sql = 'SELECT `userId`, `username`, `fullName` , `email` FROM users WHERE `userId` =' . "'" . $userId  . "'" ;
+        $data = $this->db->query($sql);
+        return $data;
     }
 }
