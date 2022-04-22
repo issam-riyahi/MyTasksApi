@@ -27,15 +27,15 @@ require 'Router/Router.php';
 // $checkAuth = validateJWT($jwt, SECRET);
 
 // if($checkAuth){
-//     $router->run();
+    $router->run();
     
 // }
 // else{
 
-//     $response->sendStatus(401);
-//     $response->setContent(['message'=> 'Unauthorized']);
-//     // $header = $response->getHeader();
-//     // var_dump($header);
+    // $response->sendStatus(401);
+    // $response->setContent(['message'=> 'Unauthorized']);
+    // $header = $response->getHeader();
+    // var_dump($header);
     
 
 // }

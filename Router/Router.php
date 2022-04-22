@@ -1,14 +1,14 @@
 <?php
 
 
-$router->get('/tasks', 'TaskController@index');
-$router->get('/tasks/:userId', 'TaskController@getByUser');
-$router->delete('/tasks', 'TaskController@delete');
-$router->post('/tasks', 'TaskController@add');
-$router->put('/tasks/:updatedTask', 'TaskController@update');
+$router->get('/tasks', 'TaskController@index')->setAuth(true);
+$router->get('/tasks/:userId', 'TaskController@getByUser')->setAuth(true);
+$router->delete('/tasks', 'TaskController@delete')->setAuth(true);
+$router->post('/tasks', 'TaskController@add')->setAuth(true);
+$router->put('/tasks/:updatedTask', 'TaskController@update')->setAuth(true);
 
 
-$router->get('/section', 'SectionController@index');
+$router->get('/section', 'SectionController@index')->setAuth(true);
 $router->get('/section/:userId', 'SectionController@index');
 $router->post('/section', 'SectionController@create');
 $router->delete('/section',  'SectionController@delete');

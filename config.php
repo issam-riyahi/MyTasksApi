@@ -24,8 +24,8 @@
     ]);
 
     define('SECRET', '04ff5daadaa987fc26858770138ca559940fb528015d1da047264870ce7f7113');
+    const ISSUER = "http://localhost:4040"; 
 
 
-    $issued = time();
-    $expire = $issued  + (60);
-    $issuer = "http://localhost:3001"; 
+    // $issued = time();
+    // $expire = $issued  + (60);

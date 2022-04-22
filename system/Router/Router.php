@@ -37,28 +37,30 @@ class Router {
 
 
     public function get($pattern, $callback){
-        $this->addRoute('GET', $pattern, $callback);
+       return $this->addRoute('GET', $pattern, $callback);
     }
 
 
 
     public function post($pattern, $callback){
-        $this->addRoute('POST', $pattern, $callback);
+       return $this->addRoute('POST', $pattern, $callback);
     }
 
     public function put($pattern, $callback){
-        $this->addRoute('PUT', $pattern, $callback);
+       return $this->addRoute('PUT', $pattern, $callback);
     }
 
 
     public function delete($pattern, $callback){
-        $this->addRoute('DELETE', $pattern, $callback);
+        return $this->addRoute('DELETE', $pattern, $callback);
     }
 
 
 
     public function addRoute($methode, $pattern, $callback ){
-        array_push($this->router, new Route($methode, $pattern, $callback));
+        $route = new Route($methode, $pattern, $callback);
+        array_push($this->router, $route);
+        return $route;
     }
 
 
@@ -141,12 +143,12 @@ class Router {
         else {
             foreach($this->matchRouter as $router){
                if($router->getMethod() === $this->request->getMethod() ){
-
+                    
                     if(is_callable($router->getCallback())){
                     call_user_func($router->getCallback(), $this->param);
                     }
                     else {
-                        $this->runController($router->getCallback(), $this->param);
+                        $this->runController($router->getCallback(), $this->param, $router->getAuth());
                     } 
                }
                 
@@ -155,7 +157,7 @@ class Router {
         }
     }
 
-    private function runController($Controller, $params){
+    private function runController($Controller, $params, $auth){
         $parts = explode('@', $Controller);
         $file = CONTROLLERS . ucfirst($parts[0]) . '.php';
 

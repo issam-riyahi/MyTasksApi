@@ -14,20 +14,20 @@ class UserController extends Controller {
         $this->response->setContent($data);
     }
 
-    public function login(){
-        $model = $this->model('User');
-        $result = $model->userLogin();
+    // public function login(){
+    //     $model = $this->model('User');
+    //     $result = $model->userLogin();
 
-        if(empty($result)){
-            $this->response->sendStatus(404);
-        }
-        else{
+    //     if(empty($result)){
+    //         $this->response->sendStatus(404);
+    //     }
+    //     else{
 
-            $data = ['data' => $result];
-            $this->response->sendStatus(200);
-            $this->response->setContent($data);
-        }
-    }
+    //         $data = ['data' => $result];
+    //         $this->response->sendStatus(200);
+    //         $this->response->setContent($data);
+    //     }
+    // }
 
     public function create(){
         $model = $this->model('User');
@@ -44,12 +44,12 @@ class UserController extends Controller {
     }
 
 
-    public function auth(){
-        $model = $this->model('User');
-        return  $model->authenticat();
+    // public function auth(){
+    //     $model = $this->model('User');
+    //     return  $model->authenticat();
 
         
-    }
+    // }
 
 
     public function getUserById($userId){

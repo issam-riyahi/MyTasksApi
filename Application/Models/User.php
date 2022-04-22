@@ -1,9 +1,11 @@
-<?php 
+<?php
+
+use Authentication\Auth;
 use MVC\Model;
 
 class User extends Model {
     
-
+    use Auth;
 
     public function AllUsers(){
 
@@ -47,8 +49,9 @@ class User extends Model {
     }
 
 
-    public function authenticat(){
-        $postParmas = $GLOBALS['request']->input();
+    public function validateLogin(){
+        $postParmas = $GLOBALS['request']->post();
+        var_dump($postParmas);
         $pwd = htmlspecialchars($postParmas['password']) ;
         $username = htmlspecialchars($postParmas['username']) ;
         $sql = 'SELECT `userId`, `username`, `fullName` , `email`, `password` FROM users WHERE `username` =' . "'" . $username  . "'";

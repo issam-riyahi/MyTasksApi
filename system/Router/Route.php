@@ -13,6 +13,8 @@ final class Route {
 
     private $callback;
 
+    private $auth = false;
+
 
     private $listMethod = ['GET', 'POST', 'PUT', 'DELETE', 'OPTION'];
 
@@ -21,8 +23,15 @@ final class Route {
         $this->method = $this->validatMethode(strtoupper($method));
         $this->pattern = cleanUrl($pattern);
         $this->callback = $callback;   
+
     }
 
+    public function setAuth($auth){
+        $this->auth = $auth;
+    }
+    public function getAuth(){
+        return $this->auth;
+    }
     public function validatMethode($method){
         if(in_array($method, $this->listMethod)){
             return $method;
