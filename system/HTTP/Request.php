@@ -45,9 +45,9 @@ class Request {
         $request = json_decode($postdata, true);
 
         if($key != '') {
-            return isset($request[$key]) ? $this->clean($request[$key]) : null;
+            return isset($request[$key]) ? $this->clean($request[$key]) : array();
         }
-        return ($request);
+        return empty($request) ? array() : $request;
     }
 
 

@@ -6,14 +6,16 @@ class Task extends Model {
 
 
 
-    public function getAllTasks(){
-        $getParmas = $GLOBALS['request']->get();
+    public function getAllTasks($getParmas){
+         
         $sql ='SELECT * FROM tasks ';
+
         if(!empty($getParmas)){
-            // var_dump($getParmas);
+            $sql = $sql . " WHERE ";
             foreach($getParmas as $key => $value){
-                $sql .= 'WHERE ' . $key . '=' . "'" . $value . "'" ;
+                $sql .= $key . '=' . "'" . $value . "' and " ;
             }
+            $sql = substr($sql, 0 , -4);
             return $this->db->query($sql);
         }
         return $this->db->query($sql);
@@ -21,12 +23,13 @@ class Task extends Model {
     }
 
 
-    public function getTasksByUser($userId){
-        $getParmas = $GLOBALS['request']->get();
-        $sql ='SELECT * FROM tasks  WHERE user_id=' . "'" . $userId['userId'] . "'"  ;
+    public function getTasksByUser($getParmas){
+        // var_dump($getParmas);
+        
+        $sql ='SELECT * FROM tasks  WHERE user_id=' . "'" . $getParmas['userId'] . "'"  ;
         if(!empty($getParmas)){
-            // var_dump($getParmas);
             foreach($getParmas as $key => $value){
+                if($key !== 'userId')
                 $sql .= 'and ' . $key . '=' . "'" . $value . "'" ;
             }
             return $this->db->query($sql);
@@ -36,17 +39,16 @@ class Task extends Model {
 
     }
 
-    public function deleteTask(){
-        $getParmas = $GLOBALS['request']->get();
+    public function deleteTask($getParmas){
         // $sql = "DELETE FROM tasks where task_id IN (" . implode(",", $getParmas['tasks_id']) . ");";
         $sql = "DELETE FROM tasks where task_id IN (" . $getParmas['tasks_id'] . ");";
         $this->db->query($sql);
         
     }
 
-    public function addTask(){
+    public function addTask($postParm){
 
-        $postParm = $GLOBALS['request']->post();
+        
         foreach($postParm as $key => $value ){
             if(in_array($key, ['id', 'taskId', 'task_id']))
             $task_id = $value ;
@@ -74,9 +76,9 @@ class Task extends Model {
     }
 
 
-    public function UpdateTask($taskId){
+    public function UpdateTask($putParm ){
 
-        $putParm = $GLOBALS['request']->input();
+        var_dump($putParm);
         // var_dump($putParm);
         // $taskId = $putParm['taskId'];
         // $title  = $putParm['title'];

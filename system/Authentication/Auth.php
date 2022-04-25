@@ -38,9 +38,9 @@ trait Auth {
     }
 
 
-    function validateToken(){
+    public function validateToken(){
         
-        $jwt = getBearerToken();
+        $jwt = $this->getBearerToken();
         if(empty($jwt)){
             return false;
         }
@@ -64,12 +64,12 @@ trait Auth {
         
         
         if($isTokenExpired && $base64UrlSignature === $signature){
-            return ;
+            return true;
         }
         return false;
     }
     
-    function getAuthorisationHeader(){
+    public function getAuthorisationHeader(){
         $request = $GLOBALS['request'];
         $header = null;
         
@@ -84,8 +84,8 @@ trait Auth {
     }
     
     
-    function getBearerToken(){
-        $header = getAuthorisationHeader();
+    public function getBearerToken(){
+        $header = $this->getAuthorisationHeader();
          if(!empty($header)){
              if(preg_match('/Bearer\s(\S+)/',$header, $matches)){
                 return $matches[1];

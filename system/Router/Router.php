@@ -2,6 +2,7 @@
 namespace Router;
 
 use Exception;
+use ValidateAuthenticat;
 
 class Router {
 
@@ -33,6 +34,7 @@ class Router {
 
         $this->response = $GLOBALS['response'];
         $this->request = $GLOBALS['request'];
+        $this->param = array_merge($this->request->get(),$this->request->post(), $this->request->input());
     }
 
 
@@ -66,8 +68,13 @@ class Router {
 
     private function getMatchRouteByRequestMethod(){
         foreach($this->router as $value){
-            if(strtoupper($this->method) === $value->getMethod());
-            array_push($this->matchRouter, $value);
+            if(strtoupper($this->method) == $value->getMethod()){
+                
+                array_push($this->matchRouter, $value);
+            }
+            
+            
+            
         }
     }
 
@@ -134,10 +141,11 @@ class Router {
             throw new Exception('NON-Object router set');
         }
 
-        $this->getMatchRouteByRequestMethod();
+        $this->getMatchRouteByRequestMethod(); 
+        
         $this->getMatchRouterByPattern($this->matchRouter);
-
-        if(!$this->matchRouter && empty($this->matchRouter)){
+        
+        if(!$this->matchRouter && empty($this->matchRouter) && $this->method !== 'OPTIONS'){
             $this->setNotFound();
         }
         else {
@@ -160,12 +168,33 @@ class Router {
     private function runController($Controller, $params, $auth){
         $parts = explode('@', $Controller);
         $file = CONTROLLERS . ucfirst($parts[0]) . '.php';
+        $fileAuth = CONTROLLERS . "Auth/ValidateAuthenticat.php";
+        $valid = true;
+        if($auth){
 
+            require_once($fileAuth);
+            $validateAuthController =  new ValidateAuthenticat();
+            $valid = $validateAuthController->validateAuth();
+            var_dump($valid);
+        }
+        
+        if($valid){
+
+        
         if(file_exists($file))
         {
+            
             require_once($file);
+            
+            if(strpos($parts[0], '/')){
+                $Controller = explode('/', $parts[0])[1];
+                
+            }
+            else{
 
-            $Controller = ucfirst($parts[0]);
+                $Controller = ucfirst($parts[0]);
+            }
+            // dd(class_exists($Controller));
             if(class_exists($Controller)){
                 $Controller = new $Controller();
             }
@@ -186,25 +215,37 @@ class Router {
             if(is_callable([$Controller, $method])){
                 return  call_user_func([$Controller, $method], $params);
             }
-                
+            else{
 
-            
-            else
-            
                 $this->setNotFound();
+            }
             
-
+            
         }
+    }
+    else{
+        $this->setUnauthorized();
+    }
+        
             
     }
 
     private function setNotFound(){
-        $this->response->sendStatus(404);
-        $this->response->setContent(['error' => 'Sorry This Route Not Found !', 'status_code' => 404]);
+        $this->response->sendStatus(400);
+        $this->response->setContent(['error' => "Sorry the route not found", 'status_code' => 404]);
     }
 
+    private function setUnauthorized(){
+        $this->response->sendStatus(401);
+        $this->response->setContent(['error' => 'Sorry Your are Unauthorized', 'status_code' => 401]);
+    }
     public function getMatchRouter(){
         return $this->matchRouter;
+    }
+
+
+    public function getParam(){
+        return $this->param;
     }
 }   
 

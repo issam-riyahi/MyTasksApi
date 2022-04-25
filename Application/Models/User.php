@@ -49,9 +49,8 @@ class User extends Model {
     }
 
 
-    public function validateLogin(){
-        $postParmas = $GLOBALS['request']->post();
-        var_dump($postParmas);
+    public function validateLogin($postParmas){
+        
         $pwd = htmlspecialchars($postParmas['password']) ;
         $username = htmlspecialchars($postParmas['username']) ;
         $sql = 'SELECT `userId`, `username`, `fullName` , `email`, `password` FROM users WHERE `username` =' . "'" . $username  . "'";
@@ -71,8 +70,8 @@ class User extends Model {
         }
         return $data ;
     }
-    public function userRegister(){
-        $postParams = $GLOBALS['request']->input();
+    public function userRegister($postParams ){
+        
         
 
         

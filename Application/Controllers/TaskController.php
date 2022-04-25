@@ -3,13 +3,13 @@ use MVC\Controller;
 
 class TaskController extends Controller {
     
-    public function index($userId = null){
+    public function index($request){
 
         $model = $this->model('Task');
 
-        $userId = isset($userId['userId']) ?  $userId['userId'] : null ;
+        // $userId = isset($userId['userId']) ?  $userId['userId'] : null ;
 
-        $users = $model->getAllTasks();
+        $users = $model->getAllTasks($request);
         
         
         $data = ['data' => $users];
@@ -18,11 +18,11 @@ class TaskController extends Controller {
         
     }
 
-    public function getByUser($userId){
+    public function getByUser($request){
 
         $model = $this->model('Task');
         
-        $result =  $model->getTasksByUser($userId);
+        $result =  $model->getTasksByUser($request);
         
         $data = ['data' => $result];
 
@@ -31,33 +31,33 @@ class TaskController extends Controller {
     }
     
     
-    public function delete(){
+    public function delete($request){
 
         $model = $this->model('Task');
-        $model->deleteTask();
+        $model->deleteTask($request);
         $this->response->sendStatus(200);
         $this->response->setContent(['message' => 'the tasks has been deleted']);
 
     }
 
-    public function add(){
+    public function add($request){
 
         $model = $this->model('Task');
-        $data =  $model->addTask();
+        $data =  $model->addTask($request);
         // $this->response->sendStatus(200);
         // $this->response->setHeader('Content-Type: application/json; charset=UTF-8');
         // $this->response->setContent(['data' => $data ]);
     }
 
-    public function create(){
+    public function create($request){
         $model = $this->model('Task');
-        $model->addTask();
+        $model->addTask($request);
         $this->response->sendStatus(200);
     }
 
-    public function update($task){
+    public function update($request){
         $model = $this->model('Task');
-        $model->UpdateTask($task['updatedTask']);
+        $model->UpdateTask($request);
         $this->response->sendStatus(200);
         $this->response->setContent(['message' => 'ok']);
     }

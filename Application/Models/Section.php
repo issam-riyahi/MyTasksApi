@@ -5,8 +5,8 @@ class Section extends Model {
     
 
 
-    public function AllSections(){
-        $getParmas = $GLOBALS['request']->get();
+    public function AllSections($getParmas){
+         
         $sql = 'SELECT * FROM section';
         if(!empty($getParmas)){
             // var_dump($getParmas);
@@ -23,9 +23,9 @@ class Section extends Model {
         $sql = "SELECT * FROM section WHERE `user_id` = " . "'" . $user . "'";
         return $this->db->query($sql);
     }
-    public function addSection(){
-        $getParmas = $GLOBALS['request']->post();
-        var_dump($getParmas);
+    public function addSection($getParmas){
+         
+        // var_dump($getParmas);
         $name = $getParmas['name'];
         $color = $getParmas['color'];
         $userId = $getParmas['userId'];
@@ -34,8 +34,8 @@ class Section extends Model {
         $this->db->query($sql);
     }
 
-    public function deleteSection(){
-        $getParmas = $GLOBALS['request']->get();
+    public function deleteSection($getParmas){
+        
         // $sql = "DELETE FROM tasks where task_id IN (" . implode(",", $getParmas['tasks_id']) . ");";
         $this->db->query("DELETE FROM tasks where section_id IN (" . $getParmas['sectionId'] . ");");
         $sql = "DELETE FROM section where section_id IN (" . $getParmas['sectionId'] . ");";
@@ -45,9 +45,9 @@ class Section extends Model {
     }
 
 
-    public function updateSection(){
+    public function updateSection($getParmas){
 
-        $getParmas = $GLOBALS['request']->input();
+        
 
         $sectionId = htmlspecialchars($getParmas['sectionId']) ;
         $name = htmlspecialchars( $getParmas['name']);

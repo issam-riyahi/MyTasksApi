@@ -4,9 +4,10 @@ use MVC\Controller;
 
 class LoginAuthController extends Controller{
    
-    public function Login(){
+    public function login($request){
+        // var_dump($request);
         $model = $this->model('user');
-        $data = $model->validateLogin();
+        $data = $model->validateLogin($request);
 
         if(!empty($data)){
             $jwt = $model->generateToken($data);
@@ -15,7 +16,7 @@ class LoginAuthController extends Controller{
 
         }
         else{
-            $this->response->sendStatus(204);
+            $this->response->sendStatus(200);
             $this->response->setContent(['message' => 'login faild']);
         }
     }

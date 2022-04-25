@@ -29,9 +29,9 @@ class UserController extends Controller {
     //     }
     // }
 
-    public function create(){
+    public function create($request){
         $model = $this->model('User');
-        $status = $model->userRegister();
+        $status = $model->userRegister($request);
         if($status){
             $this->response->sendStatus(200);
             $this->response->setContent(['message' => 'the User has been added']);

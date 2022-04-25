@@ -1,11 +1,11 @@
 <?php
 namespace Auth;
 
-use LoginAuthController;
+use ValidateAuthenticat;
 
 require 'config.php';
 require_once SYSTEM . 'startup.php';
-require_once CONTROLLERS . 'Auth/LoginAuthController.php';
+require_once CONTROLLERS . 'Auth/ValidateAuthenticat.php';
 
 
 header("Access-Control-Allow-Origin: *");
@@ -16,7 +16,16 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
  
 
 
-$Controller = new LoginAuthController();
-$Controller->login();
+$Controller = new ValidateAuthenticat();
+$valide = $Controller->validateAuth();
+
+if($valide){
+    $Controller->response->sendStatus(200);
+    $Controller->response->setContent(['message' => 'valide token'] );
+}
+else{
+    $Controller->response->sendStatus(203);
+    $Controller->response->setContent(['message' => 'valide token'] );
+}
 $Controller->response->render();
 

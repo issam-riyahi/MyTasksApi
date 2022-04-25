@@ -4,15 +4,15 @@ use MVC\Controller;
 class SectionController extends Controller {
 
 
-    public function index($userId = null){
-
+    public function index($request){
+        
         $model = $this->model('Section');
-        if(isset($userId['userId'])){
-            $result = $model->sectionByUser($userId['userId']);
+        if(isset($request['userId'])){
+            $result = $model->sectionByUser($request['userId']);
         }
         else{
 
-            $result = $model->AllSections();
+            $result = $model->AllSections($request);
         }
 
         $data = ['data' => $result];
@@ -21,26 +21,26 @@ class SectionController extends Controller {
     }
 
     
-    public function create(){
+    public function create($request){
         $model = $this->model('Section');
-        $model->addSection();
+        $model->addSection($request);
         $this->response->sendStatus(200);
        
         $this->response->setContent(['message' => 'ok']);
     }
 
 
-    public function delete(){
+    public function delete($request){
 
         $model = $this->model('Section');
-        $model->deleteSection();
+        $model->deleteSection($request);
         $this->response->sendStatus(200);
     }
 
-    public function update(){
+    public function update($request){
 
         $model = $this->model('Section');
-        $result = $model->updateSection();
+        $result = $model->updateSection($request);
         $this->response->sendStatus(200);
         $this->response->setContent(['data' => $result]);
     }

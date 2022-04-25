@@ -14,18 +14,18 @@ use Router\Router;
 $response->setHeader("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept"); 
 // $response->setHeader("Access-Control-Allow-Origin: *"); 
 // $response->setHeader("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Headers: X-Requested-With, Authorization,  Content-Type, Accept");
+header("Access-Control-Allow-Headers: X-Requested-With, Authorization,  Content-Type, Accept , X-Auth-Token");
 
 
 $router = new Router($request->getUrl(), $request->getMethod());
-
 require 'Router/Router.php';
 // $jwt = getBearerToken();
 // $checkAuth = validateJWT($jwt, SECRET);
-
+// $router->getMatchRouteByRequestMethod();
+// dd($request->getMethod());
 // if($checkAuth){
     $router->run();
     
