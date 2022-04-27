@@ -175,7 +175,6 @@ class Router {
             require_once($fileAuth);
             $validateAuthController =  new ValidateAuthenticat();
             $valid = $validateAuthController->validateAuth();
-            var_dump($valid);
         }
         
         if($valid){

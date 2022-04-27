@@ -56,7 +56,7 @@ class User extends Model {
         $sql = 'SELECT `userId`, `username`, `fullName` , `email`, `password` FROM users WHERE `username` =' . "'" . $username  . "'";
         $data = $this->db->query($sql);
         
-        if(isset($data->row)){
+        if(!empty($data->row)){
             if(password_verify($pwd, $data->row['password'])){
                 
                 $data = array('username' => $data->row['username'], 'email' => $data->row['email'], 'userId' => $data->row['userId'] );

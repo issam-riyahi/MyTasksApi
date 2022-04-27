@@ -16,7 +16,7 @@ class LoginAuthController extends Controller{
 
         }
         else{
-            $this->response->sendStatus(200);
+            $this->response->sendStatus(204);
             $this->response->setContent(['message' => 'login faild']);
         }
     }

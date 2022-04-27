@@ -18,9 +18,10 @@ $router->put('/section',  'SectionController@update')->setAuth(true);
 
 
 // $router->get('/user', 'UserController@index');
-// $router->get('/user/:userId', 'UserController@byUser');
+$router->get('/user/:userId', 'UserController@getUserById')->setAuth(true);
 $router->post('/user', 'UserController@create');
 $router->put('/user', 'Auth/LoginAuthController@login');
+$router->post('/refresh','Auth/RefreshTokenController@refreshToken');
 $router->get('/', function() {
     echo 'Welcome ';
 });

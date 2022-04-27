@@ -52,9 +52,17 @@ class UserController extends Controller {
     // }
 
 
-    public function getUserById($userId){
-        $model = $this->model('User');
+    public function getUserById($request){
+        if(isset($request['userId'])){
+            $model = $this->model('User');
+            $data = $model->userById($request['userId']);
 
-        return $model->userById($userId);
+            $this->response->sendStatus(200);
+            $this->response->setContent(['user' => $data->row]);
+        }
+        else{
+            $this->response->sendStatus(203);
+            $this->response->setContent(['message' => 'invalid user']);
+        }
     }
 }

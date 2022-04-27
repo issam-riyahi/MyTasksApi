@@ -78,16 +78,16 @@ class Task extends Model {
 
     public function UpdateTask($putParm ){
 
+        
         var_dump($putParm);
-        // var_dump($putParm);
-        // $taskId = $putParm['taskId'];
-        // $title  = $putParm['title'];
-        // $done  = $putParm['done'];
-        // $doDate  = $putParm['doDate'];
-        // $sectionId  = $putParm['section'];
+        $taskId = $putParm['updatedTask'];
+        $title  = $putParm['title'];
+        $done  = $putParm['done'];
+        $doDate  = $putParm['doDate'];
+        $sectionId  = $putParm['section'];
 
-        // $sql = "UPDATE `tasks` SET `title` = '$title', `doDate` = '$doDate', `done` = '$done' , `section_id` = '$sectionId' WHERE `task_id` = '$taskId' ";
+        $sql = "UPDATE `tasks` SET `title` = '$title', `doDate` = '$doDate', `done` = '$done' , `section_id` = '$sectionId' WHERE `task_id` = '$taskId' ";
 
-        // $this->db->query($sql);
+        $this->db->query($sql);
     }
 }
